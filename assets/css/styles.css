@@ -2,6 +2,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.v-btn {
+  text-transform:none !important;
+}
+
 html {
   overflow-y: auto !important;
 }
