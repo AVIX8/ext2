@@ -1,23 +1,33 @@
-import ext2 from '~/src/ext2'
-// const fileReader = new FileReader();
-// fileReader.onload = function(event) {
-//   const arrayBuffer = event.target.result;
-// };
+import ext2 from '~/src/Ext2'
 
 export const state = () => ({
-  volume: undefined,
+  filename: '',
+  tree: [{name: 'root', isDir: true, inode: 2, children: []}],
 })
 
+const hiddenDir = ['.', '..']
+
 export const mutations = {
-  setVolume(state, file) {
-    // this.file = file
-    // fileReader.readAsArrayBuffer(file);
-    console.log(file.arrayBuffer());
+  setFilename(state, filename) {
+    state.filename = filename;
   },
+  readDirectory(state, item) {
+    const items = ext2.readDirectory(item.inode).filter(el => !hiddenDir.includes(el.name))
+    items.forEach(item => {
+      if (item.isDir) {
+        item.children = []
+      }
+    })
+
+    item.children = items;
+  }
 }
 
 export const actions = {
-  openFile(state, file) {
-    ext2.importFile(file)
+  async openFile({ commit, state }, file) {
+    commit('setFilename', file.name)
+    await ext2.importFile(file)
+
+    commit('readDirectory', state.tree[0])
   },
 }

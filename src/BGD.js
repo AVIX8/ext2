@@ -13,25 +13,21 @@
 // this table can require multiple blocks of storage.
 // Always refer to the superblock in case of doubt.
 
-const offset = 2048;
+const size = 32
 
-const fields = [
-  { name: 'bg_block_bitmap' , offset: 0 , size: 4 },
-  { name: 'bg_inode_bitmap' , offset: 4 , size: 4 },
-  { name: 'bg_inode_table' , offset: 8 , size: 4 },
-  { name: 'bg_free_blocks_count' , offset: 12 , size: 2 },
-  { name: 'bg_free_inodes_count' , offset: 14 , size: 2 },
-  { name: 'bg_used_dirs_count' , offset: 16 , size: 2 },
-  { name: 'bg_pad' , offset: 18 , size: 2 },
-  { name: 'bg_reserved' , offset: 20 , size: 12 },
-]
-
-class BGDT {
-  constructor(volume) {
-    fields.forEach(field => {
-      this[field.name] = volume.getData(offset+field.offset, field.size);
-    })
+class BlockGroupDescriptor {
+  constructor(v, i) {
+    const offset = (1 + (v.blockSize === 1024))*v.blockSize + size * i
+    console.log('BlockGroupDescriptor i, offset:', i, offset);
+    this.bg_block_bitmap = v.getData(offset + 0, 4)
+    this.bg_inode_bitmap = v.getData(offset + 4, 4)
+    this.bg_inode_table = v.getData(offset + 8, 4)
+    this.bg_free_blocks_count = v.getData(offset + 12, 2)
+    this.bg_free_inodes_count = v.getData(offset + 14, 2)
+    this.bg_used_dirs_count = v.getData(offset + 16, 2)
+    this.bg_pad = v.getData(offset + 18, 2)
+    this.bg_reserved = v.getData(offset + 20, 12)
   }
 }
 
-export default BGDT;
+export default BlockGroupDescriptor

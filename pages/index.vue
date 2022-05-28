@@ -13,7 +13,7 @@
           <v-btn large block left class="mb-4" @click="handleOpenFile">
             <v-icon left>mdi-file-import</v-icon> Открыть ext2volume<v-spacer/></v-btn
           >
-          <v-btn large block @click="createNewFile">
+          <v-btn large block disabled @click="createNewFile">
             <v-icon left>mdi-file-plus</v-icon> Создать ext2volume<v-spacer/></v-btn
           >
         </v-card-text>

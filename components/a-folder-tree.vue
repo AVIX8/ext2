@@ -1,91 +1,58 @@
 <template>
   <v-treeview
+    :key="inode"
     v-model="tree"
-    :open="initiallyOpen"
-    :items="items"
+    :items="$store.state.ext2.tree"
+    :load-children="getChildren"
     dense
     activatable
     item-key="name"
-
   >
     <template #prepend="{ item, open }">
-      <v-icon v-if="!item.file">
+      <v-icon v-if="item.isDir" color="grey">
         {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
       </v-icon>
-      <v-icon v-else>
-        {{ files[item.file] }}
+      <v-icon v-else :color="getColor(item)">
+        {{ getIcon(item) }}
       </v-icon>
     </template>
   </v-treeview>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      initiallyOpen: ['public'],
-      files: {
-        html: 'mdi-language-html5',
-        js: 'mdi-nodejs',
-        json: 'mdi-code-json',
-        md: 'mdi-language-markdown',
-        pdf: 'mdi-file-pdf',
-        png: 'mdi-file-image',
-        txt: 'mdi-file-document-outline',
-        xls: 'mdi-file-excel',
-      },
-      tree: [],
-      items: [
-        {
-          name: '.git',
-        },
-        {
-          name: 'node_modules',
-        },
-        {
-          name: 'public',
-          children: [
-            {
-              name: 'static',
-              children: [{
-                name: 'logo.png',
-                file: 'png',
-              }],
-            },
-            {
-              name: 'favicon.ico',
-              file: 'png',
-            },
-            {
-              name: 'index.html',
-              file: 'html',
-            },
-          ],
-        },
-        {
-          name: '.gitignore',
-          file: 'txt',
-        },
-        {
-          name: 'babel.config.js',
-          file: 'js',
-        },
-        {
-          name: 'package.json',
-          file: 'json',
-        },
-        {
-          name: 'README.md',
-          file: 'md',
-        },
-        {
-          name: 'vue.config.js',
-          file: 'js',
-        },
-        {
-          name: 'yarn.lock',
-          file: 'txt',
-        },
-      ],
-    }),
-  }
+const files = {
+  html: { icon: 'mdi-language-html5', color: 'orange' },
+  js: { icon: 'mdi-nodejs', color: 'green' },
+  json: { icon: 'mdi-code-json', color: 'yellow' },
+  md: { icon: 'mdi-language-markdown', color: 'blue' },
+  pdf: { icon: 'mdi-file-pdf', color: 'red' },
+  png: { icon: 'mdi-file-image', color: 'green' },
+  jpg: { icon: 'mdi-file-image', color: 'green' },
+  c: { icon: 'mdi-language-c', color: 'blue' },
+  mp3: { icon: 'mdi-file-music', color: 'red'},
+
+  txt: { icon: 'mdi-file-document-outline', color: 'blue' },
+  xls: { icon: 'mdi-file-excel', color: 'green' },
+}
+
+export default {
+  data: () => ({
+    tree: [],
+  }),
+  methods: {
+    getChildren(item) {
+      console.log('getChildren', item);
+      this.$store.commit('ext2/readDirectory', item)
+    },
+    isFolder(item) {
+      return item.name.split('.')[1] === undefined
+    },
+    getIcon(item) {
+      return files[item.name.split('.').slice(-1)[0]]?.icon ?? 'mdi-file-document'
+    },
+    getColor(item) {
+      return files[item.name.split('.').slice(-1)[0]]?.color ?? 'white'
+    },
+  },
+}
 </script>
