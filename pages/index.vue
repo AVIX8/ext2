@@ -10,11 +10,11 @@
             @change="onFileChanged"
           />
 
-          <v-btn large block class="mb-4" @click="handleOpenFile">
-            <v-icon left>mdi-file-import</v-icon> Открыть ext2volume</v-btn
+          <v-btn large block left class="mb-4" @click="handleOpenFile">
+            <v-icon left>mdi-file-import</v-icon> Открыть ext2volume<v-spacer/></v-btn
           >
           <v-btn large block @click="createNewFile">
-            <v-icon left>mdi-file-plus</v-icon> Создать ext2volume</v-btn
+            <v-icon left>mdi-file-plus</v-icon> Создать ext2volume<v-spacer/></v-btn
           >
         </v-card-text>
       </v-card>
@@ -35,6 +35,7 @@ export default {
     },
     onFileChanged(file) {
       this.$store.dispatch('ext2/openFile', file)
+      this.$router.push('/explorer')
     },
     createNewFile() {
       console.log('createNewFile')
