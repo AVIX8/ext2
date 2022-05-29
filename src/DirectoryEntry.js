@@ -1,10 +1,12 @@
 import {  TextDecoder } from 'text-decoding'
 import C from './consts'
+import Inode from './Inode'
 
 const enc = new TextDecoder('ascii')
 
-class DirectoryEntry {
+class DirectoryEntry extends Inode {
   constructor(volume, offset) {
+    super(volume, volume.getData(offset + 0, 4))
     this.inode = volume.getData(offset + 0, 4)
     this.rec_len = volume.getData(offset + 4, 2)
     this.name_len = volume.getData(offset + 6, 1)
@@ -13,7 +15,6 @@ class DirectoryEntry {
       volume.arrayBuffer.slice(offset + 8, offset + 8 + this.name_len)
     )
 
-    this.i_mode = volume.getInode(this.inode).i_mode
     this.isDir = this.i_mode >> 12 === C.EXT2_S_IFDIR >> 12
   }
 }

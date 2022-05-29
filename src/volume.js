@@ -36,11 +36,12 @@ class Volume {
     // this.readDirectory(C.EXT2_ROOT_INO, 'hz')
     // this.readDirectory(81, 'hz')
     // console.log(this.getInode(2));
+    return this.superblock;
   }
 
-  getData(offset, size) {
+  getData(offset, size, littleEndian=true) {
     if (size <= 4) {
-      return this.dataView[`getUint${size << 3}`](offset, true)
+      return this.dataView[`getUint${size << 3}`](offset, littleEndian)
     }
     const tmp = this.arrayBuffer.slice(offset, offset + size)
     return tmp
@@ -60,18 +61,18 @@ class Volume {
 
   }
 
-  // getFullFile(inode, offset, maxSize) {
-  //   let read = 0;
-  //   const size = Math.min(maxSize, inode.getSize())
-  //   const file = new ArrayBuffer(size);
-  //   while (read < size) {
-  //     let tmp = this.getFileFromBlock(file, inode, offset + read, size - read);
-  //     // if ()
-  //     // read += ;
-  //   }
+  getFullFile(inode) {
+    // let read = 0;
+    const size = inode.size;
+    const file = new ArrayBuffer(size);
+    // while (read < size) {
+    //   const tmp = this.getFileFromBlock(file, inode, offset + read, size - read);
+    //   // if ()
+    //   // read += ;
+    // }
 
-  //   return file;
-  // }
+    return file;
+  }
 
   readDirectory(inodeIndex) {
     const inode = this.getInode(inodeIndex);
@@ -80,7 +81,7 @@ class Volume {
     if (inode.i_mode >> 12 !== C.EXT2_S_IFDIR >> 12)
       return null;
 
-    const inodeSize = inode.getSize();
+    const inodeSize = inode.size;
     console.log('inodeSize', inodeSize);
 
     const entries = [];
@@ -98,4 +99,5 @@ class Volume {
   // async exortFile() {}
 }
 
-export default Volume
+const volume = new Volume();
+export default volume;
