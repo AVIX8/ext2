@@ -5,7 +5,7 @@
         <v-card-title
           >{{ $store.state.ext2.active.name }}
           <v-spacer />
-          <v-btn icon @click="download"><v-icon>mdi-download</v-icon></v-btn>
+          <v-btn v-if="!$store.state.ext2.active.isDir" icon @click="download"><v-icon>mdi-file-export</v-icon></v-btn>
         </v-card-title>
         <v-card-text>
           <v-simple-table dense>
@@ -30,9 +30,6 @@
             </template>
           </v-simple-table>
         </v-card-text>
-        <v-card-actions
-          v-if="$store.state.ext2.active.isDir === false"
-        ></v-card-actions>
       </v-card>
     </v-col>
 
@@ -441,7 +438,7 @@ export default {
           name: 'i_block',
           value: a.i_block,
           description:
-            '15 x 32bit block numbers pointing to the blocks containing the data for this inode.',
+            '15 x 32-битных номеров блоков, указывающих на блоки, содержащие данные для этого inode.',
         },
         {
           name: 'i_generation',
@@ -481,7 +478,7 @@ export default {
   },
   methods: {
     download() {
-      // this.$store.
+      this.$store.dispatch('ext2/printFile');
     },
   },
 }

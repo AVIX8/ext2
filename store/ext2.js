@@ -54,8 +54,17 @@ export const actions = {
     commit('readDirectory', state.tree[0])
   },
 
-  printFile({ commit, state }, item) {
-    console.log(item);
-    console.log(volume.getFullFile(item.inode));
+  printFile({ commit, state }) {
+    console.log(state.active);
+    let file = volume.getFullFile(state.active)
+    console.log(file);
+    file = new Blob([new Uint8Array(file)])
+    const a = document.createElement("a");
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = state.active.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove()
   }
 }
