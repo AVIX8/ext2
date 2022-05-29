@@ -47,22 +47,23 @@ export const actions = {
   async openFile({ commit, state }, file) {
     commit('closeFile')
     commit('setFile', file)
-    console.log(state.volume);
+    // console.log(state.volume);
     const superblock = await volume.importFile(file);
-    console.log(superblock);
+    // console.log(superblock);
     commit('setSuperblock', superblock)
     commit('readDirectory', state.tree[0])
   },
 
-  printFile({ commit, state }) {
-    console.log(state.active);
+  exportFile({ commit, state }) {
+    // console.log(state.active);
+    const filename = state.active.name
     let file = volume.getFullFile(state.active)
-    console.log(file);
+    // console.log(file);
     file = new Blob([new Uint8Array(file)])
     const a = document.createElement("a");
     const url = URL.createObjectURL(file);
     a.href = url;
-    a.download = state.active.name;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove()

@@ -32,7 +32,7 @@ const files = {
   jpg: { icon: 'mdi-file-image', color: 'green' },
   c: { icon: 'mdi-language-c', color: 'blue' },
   mp3: { icon: 'mdi-file-music', color: 'red' },
-
+  mp4: { icon: 'mdi-file-video', color: 'red' },
   txt: { icon: 'mdi-file-document-outline', color: 'blue' },
   xls: { icon: 'mdi-file-excel', color: 'green' },
 }

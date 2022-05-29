@@ -478,7 +478,7 @@ export default {
   },
   methods: {
     download() {
-      this.$store.dispatch('ext2/printFile');
+      this.$store.dispatch('ext2/exportFile');
     },
   },
 }

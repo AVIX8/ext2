@@ -43,11 +43,11 @@ class Volume {
         1) /
         this.superblock.s_blocks_per_group
     )
-    console.log('blockSize:', this.blockSize)
-    console.log('volumeSize:', this.volumeSize)
-    console.log('groupsNumber:', this.groupsNumber)
+    // console.log('blockSize:', this.blockSize)
+    // console.log('volumeSize:', this.volumeSize)
+    // console.log('groupsNumber:', this.groupsNumber)
 
-    console.log(this.superblock)
+    // console.log(this.superblock)
     // this.readDirectory(C.EXT2_ROOT_INO, 'hz')
     // this.readDirectory(81, 'hz')
     // console.log(this.getInode(2));
@@ -148,12 +148,12 @@ class Volume {
 
   readDirectory(inodeIndex) {
     const inode = this.getInode(inodeIndex)
-    console.log(inode)
-    console.log(inode.i_mode, C.EXT2_S_IFDIR)
+    // console.log(inode)
+    // console.log(inode.i_mode, C.EXT2_S_IFDIR)
     if (inode.i_mode >> 12 !== C.EXT2_S_IFDIR >> 12) return null
 
-    const inodeSize = inode.size
-    console.log('inodeSize', inodeSize)
+    // const inodeSize = inode.size
+    // console.log('inodeSize', inodeSize)
 
     const entries = []
     let offset = 0
