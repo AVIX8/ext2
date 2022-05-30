@@ -470,8 +470,6 @@ export default {
         res.push({
           name: 'Содержит',
           value: a.children?.length,
-          description:
-            '32-битное значение, указывающее расположение фрагмента файла.',
         })
       return res
     },
