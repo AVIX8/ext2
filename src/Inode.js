@@ -9,13 +9,13 @@ class Inode {
     const localInodeIndex = (i - 1) % volume.superblock.s_inodes_per_group
     const offset =
       blockIndex * volume.blockSize + localInodeIndex * volume.superblock.s_inode_size
-    console.log(
-      blockIndex,
-      volume.blockSize,
-      localInodeIndex,
-      volume.superblock.s_inode_size,
-      offset
-    )
+    // console.log(
+    //   blockIndex,
+    //   volume.blockSize,
+    //   localInodeIndex,
+    //   volume.superblock.s_inode_size,
+    //   offset
+    // )
 
     this.i_mode = volume.getData(offset + 0, 2)
     this.i_uid = volume.getData(offset + 2, 2)

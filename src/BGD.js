@@ -18,7 +18,7 @@ const size = 32
 class BlockGroupDescriptor {
   constructor(v, i) {
     const offset = (1 + (v.blockSize === 1024))*v.blockSize + size * i
-    console.log('BlockGroupDescriptor i, offset:', i, offset);
+    // console.log('BlockGroupDescriptor i, offset:', i, offset);
     this.bg_block_bitmap = v.getData(offset + 0, 4)
     this.bg_inode_bitmap = v.getData(offset + 4, 4)
     this.bg_inode_table = v.getData(offset + 8, 4)

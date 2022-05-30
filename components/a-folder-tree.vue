@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     getChildren(item) {
-      console.log('getChildren', item)
+      // console.log('getChildren', item)
       this.$store.commit('ext2/readDirectory', item)
     },
     isFolder(item) {

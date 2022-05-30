@@ -60,10 +60,6 @@ export default {
     },
     onFileChanged(file) {
       this.$store.dispatch('ext2/openFile', file)
-      console.log('asd')
-    },
-    createNewFile() {
-      console.log('createNewFile')
     },
     switchTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
