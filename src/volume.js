@@ -4,31 +4,13 @@ import Inode from './Inode'
 import DirectoryEntry from './DirectoryEntry'
 import C from './consts'
 
-// function concatenateUint8Array(...arrays) {
-//   let totalLength = 0
-//   for (const arr of arrays) {
-//     totalLength += arr.byteLength
-//   }
-//   const result = new Uint8Array(totalLength)
-//   let offset = 0
-//   for (const arr of arrays) {
-//     result.set(arr, offset)
-//     console.log(result);
-//     offset += arr.byteLength
-//   }
-//   return result
-// }
-
 class Volume {
   constructor() {
     this.arrayBuffer = undefined
     this.dataView = undefined
     this.superblock = null
-    this.groups = null
-    this.inodes = null
     this.blockSize = undefined
     this.volumeSize = undefined
-    // this.
   }
 
   async importFile(file) {
@@ -148,12 +130,7 @@ class Volume {
 
   readDirectory(inodeIndex) {
     const inode = this.getInode(inodeIndex)
-    // console.log(inode)
-    // console.log(inode.i_mode, C.EXT2_S_IFDIR)
     if (inode.i_mode >> 12 !== C.EXT2_S_IFDIR >> 12) return null
-
-    // const inodeSize = inode.size
-    // console.log('inodeSize', inodeSize)
 
     const entries = []
     let offset = 0
@@ -166,11 +143,8 @@ class Volume {
       offset += dirEntry.rec_len
     } while (offset < this.blockSize)
 
-    // console.log(entries);
     return entries
   }
-
-  // async exortFile() {}
 }
 
 const volume = new Volume()
